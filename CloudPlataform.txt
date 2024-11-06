@@ -1,0 +1,8 @@
+Criar chave ssh
+
+- Abrir git bash na pasta do projeto
+- Gerar a chave ssh (ssh-keygen)
+- Iniciar agent (eval `ssh-agent -s`)
+- Adicionar o ssh (ssh-add ~/.ssh/idssh)
+- Copiar a chave do sshid.pub que fica no caminho do usuario da maquina
+- Colar no ssh key do Google Cloud Plataform em metadatas

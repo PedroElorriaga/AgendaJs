@@ -1,0 +1,45 @@
+<%- include('./includes/head.ejs') %>
+    <%- include('./includes/nav.ejs') %>
+        <div class="contanier">
+            <div class="row ml-0 mr-0">
+                <div class="col-lg-2 my-3"></div>
+                <div class="col-lg-8 my-3">
+                    <h1 class="text-center">Contatos</h1>
+                    <p class="text-center lead">Seus contatos abaixo</p>
+                    <%- include('./includes/flashMessage.ejs') %>
+                        <div class="responsive-table text-center">
+                            <% if (contacts.length==0) { %>
+                                <h4 class="text-center my-5">Cadastre seu primeiro contato</h4>
+                                <a href="/contact"><button type="button" class="btn btn-primary">Cadastrar novo
+                                        contato</button></a>
+                                <% } %>
+                                    <table class="table my-5 text-center">
+                                        <% contacts.forEach((item)=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= item.name%>
+                                                </td>
+                                                <td>
+                                                    <%= item.middlename%>
+                                                </td>
+                                                <td>
+                                                    <%= item.cellphone%>
+                                                </td>
+                                                <td>
+                                                    <%= item.email%>
+                                                </td>
+                                                <% if (user) {%>
+                                                    <td><a href="/contact/<%= item._id%>"><button type="button"
+                                                                class="btn btn-light">Editar</button></a></td>
+                                                    <td><a href="/contact/delete/<%= item._id%>"><button type="button"
+                                                                class="btn btn-danger">Excluir</button></a></td>
+                                                    <% }%>
+                                            </tr>
+                                            <% })%>
+                                    </table>
+                        </div>
+                </div>
+                <div class="col-lg-2 my-3"></div>
+            </div>
+        </div>
+        <%- include('./includes/footer.ejs') %>
