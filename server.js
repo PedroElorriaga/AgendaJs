@@ -37,7 +37,7 @@ app.use(session({
 }))
 app.use(csurf())
 app.use(flash())
-app.use(helmet())
+// app.use(helmet())
 app.use(csrfError)
 app.use(csrfCreateToken)
 app.use(flashMessage)
