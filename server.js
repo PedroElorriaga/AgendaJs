@@ -8,7 +8,6 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('express-flash')
 const MongoDBStore = require('connect-mongodb-session')(session)
-const helmet = require('helmet')
 const csurf = require('csurf')
 const { csrfError, csrfCreateToken } = require('./src/middlewares/csrfMiddleware')
 const { flashMessage } = require('./src/middlewares/flashMiddleware')
@@ -37,7 +36,6 @@ app.use(session({
 }))
 app.use(csurf())
 app.use(flash())
-app.use(helmet())
 app.use(csrfError)
 app.use(csrfCreateToken)
 app.use(flashMessage)
@@ -50,7 +48,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.resolve(__dirname, 'src', 'views'))
 
 app.on('connect', () => {
-    app.listen(8000, () => {
-        console.log(`Server is running on http://localhost:8000`)
+    app.listen(3000, () => {
+        console.log(`Server is running on http://localhost:3000`)
     })
 })
