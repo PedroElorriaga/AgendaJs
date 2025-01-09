@@ -1,0 +1,45 @@
+Primeiro - deixamos tudo configurado no lado do CloudPlataform
+
+Segundo - entramos no nosso servidor usando o SSH e começamos as configurações
+
+Terceiro - dentro do nosso servidor criaremos um diretorio chamado "deploy" no diretorio raiz
+
+Quarto - dentro do diretorio "deploy" criaremos um diretorio chamado "suaaplicação.git"
+
+Quinto - no diretorio raiz executamos um comando para dar permissões "chmod -Rf 775 deploy"
+
+Sexto - entraremos dentro do diretorio "suaaplicação.git" e iniciaremos o "git init --bare" e "git branch -m main"
+
+Setimo - criaremos um arquivo dentro do diretorio "hooks" para criar o seguinte arquivo "nano hooks/post-receive"
+
+Oitavo - escreveremos dentro do arquivo o script abaixo
+
+            #!/bin/bash
+
+            # Diretórios
+            APPDIR="/home/Pedro/projetos/AgendaJs" # Mude para o seu diretorio do app
+
+            HOOKSDIR="/home/Pedro/deploy/agenda.git" # Mude para o seu diretorio de configurações
+            BRANCH="main"  # Altere para "master" se sua branch padrão for master
+
+            # Certifique-se de que a branch exista antes de fazer o checkout
+            if git --git-dir="${HOOKSDIR}" rev-parse --verify "${BRANCH}" >/dev/null 2>&1; >
+                # Atualização do código
+                git --work-tree="${APPDIR}" --git-dir="${HOOKSDIR}" checkout -f "${BRANCH}"
+            else
+                echo "Erro: A branch '${BRANCH}' ainda não existe no repositório bare."
+                exit 1
+            fi
+
+            # Ajuste de permissões
+            find "${APPDIR}" -type f -exec chmod 0644 {} \;  # Permissões para arquivos
+            find "${APPDIR}" -type d -exec chmod 0755 {} \;  # Permissões para diretórios
+
+            # Mensagem de sucesso
+            echo "Aplicação atualizada com sucesso"
+
+Nono - ainda no diretorio "suaaplicação.git" execute o seguinte comando "chmod +x hooks/post-receive"
+
+Decimo - agora vamos adicionar o repositório remoto no ambiente de desenvolvimento "git remote add origin ssh://UsuarioSsh@IpSsh:/home/Nome/deploy/suaaplicação.git"
+
+Decimo Primeiro - agora é subir para o servidor da mesma forma que sobe no github "git push origin main:main"
